@@ -1,0 +1,783 @@
+:root {
+    --primary-color: #0f172a;
+    --secondary-color: #3b82f6;
+    --accent-color: #f59e0b;
+    --text-light: #f8fafc;
+    --text-dark: #1e293b;
+    --bg-light: #f1f5f9;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* Header/Nav */
+header {
+    background-color: var(--primary-color);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.logo-text {
+    color: var(--text-light);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-truck {
+    position: absolute;
+    font-size: 2.5rem;
+    left: -50px;
+    /* Start off-screen */
+    bottom: -10px;
+    opacity: 0;
+    z-index: 1;
+    transform: rotate(-10deg);
+}
+
+/* Animation Trigger */
+.logo-container:hover .logo-truck {
+    animation: truckDrive 1.2s forwards;
+}
+
+.logo-container:hover .logo-text {
+    animation: textLift 1.2s forwards;
+}
+
+@keyframes truckDrive {
+    0% {
+        left: -50px;
+        top: -50px;
+        /* Falls from top */
+        opacity: 0;
+        transform: rotate(-20deg);
+    }
+
+    30% {
+        left: 0;
+        top: 10px;
+        /* Lands */
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+
+    60% {
+        left: 20px;
+        /* Drives under */
+        top: 10px;
+    }
+
+    100% {
+        left: 10px;
+        /* POSITIONS AS CABIN */
+        top: 10px;
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes textLift {
+    0% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-5px);
+    }
+
+    /* Dodge */
+    60% {
+        transform: translateY(-15px);
+    }
+
+    /* Lift up */
+    100% {
+        transform: translateY(-12px) translateX(25px);
+        /* Sits on trailer position */
+        color: #fca5a5;
+        /* Changes color slightly to blend */
+    }
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin-left: 2rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
+    display: inline-block;
+    /* Required for transform */
+    animation: wiggle 0.5s ease-in-out infinite;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+    padding: 0 1rem;
+    overflow: hidden;
+    /* Prevent scrollbars */
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+/* Magnetic Text Implementation Styles */
+.hero-content h1 .word-block,
+.hero-content p .word-block {
+    display: inline-block;
+    white-space: nowrap;
+    /* CRITICAL: Groups letters, prevents mid-word break */
+}
+
+.hero-content h1 .char-span,
+.hero-content p .char-span {
+    display: inline-block;
+    /* Allows transform per letter */
+    cursor: default;
+    will-change: transform;
+}
+
+/* Ensure spaces flow naturally */
+.hero-content h1 .space-span,
+.hero-content p .space-span {
+    display: inline;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px) rotate(-1deg);
+    }
+
+    50% {
+        transform: translateX(5px) rotate(1deg);
+    }
+
+    75% {
+        transform: translateX(-5px) rotate(-1deg);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* wiggle animation definition */
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: rotate(-3deg);
+    }
+
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes attention-grabber {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    }
+
+    5% {
+        transform: scale(1.05) rotate(-2deg);
+    }
+
+    10% {
+        transform: scale(1.05) rotate(2deg);
+    }
+
+    15% {
+        transform: scale(1.05) rotate(-2deg);
+    }
+
+    20% {
+        transform: scale(1.05) rotate(2deg);
+    }
+
+    25% {
+        transform: scale(1) rotate(0deg);
+        box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: var(--transition);
+    border: 2px solid var(--secondary-color);
+    animation: attention-grabber 2s infinite;
+    /* Runs constantly */
+}
+
+@keyframes happy-vibrate {
+    0% {
+        transform: scale(1.1) rotate(0deg);
+    }
+
+    20% {
+        transform: scale(1.1) rotate(-3deg);
+    }
+
+    40% {
+        transform: scale(1.1) rotate(3deg);
+    }
+
+    60% {
+        transform: scale(1.1) rotate(-3deg);
+    }
+
+    80% {
+        transform: scale(1.1) rotate(3deg);
+    }
+
+    100% {
+        transform: scale(1.1) rotate(0deg);
+    }
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    /* Keep color solid or maybe change slightly */
+    color: white;
+    box-shadow: 0 0 15px var(--secondary-color);
+    animation: happy-vibrate 0.4s ease-in-out infinite;
+    /* Fast vibration */
+
+    /* Ensure clean animation handoff */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+/* Services Section */
+.services {
+    padding: 5rem 5%;
+    text-align: center;
+    background-color: white;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background-color: var(--secondary-color);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background: var(--bg-light);
+    padding: 2rem;
+    border-radius: 12px;
+    transition: var(--transition);
+    border: 1px solid #e2e8f0;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Gallery Section */
+.gallery {
+    padding: 5rem 5%;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Changed to auto-fit for better centering behavior */
+    gap: 1.5rem;
+    justify-content: center;
+    /* Centers the grid items if they don't fill the row */
+}
+
+/* Updated Gallery Styling - Clean & Professional */
+.gallery-item {
+    position: relative;
+    width: 100%;
+    /* Remove fixed height to let image dictate size, or keep if grid needs it. Auto is safer for variable aspect ratios */
+    height: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: transparent;
+    /* No more gray box */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    /* No more dashed border */
+    transition: transform 0.3s ease;
+}
+
+/* Placeholder text inside the box */
+.gallery-item span {
+    color: #64748b;
+    font-weight: 500;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Optional: Label that appears on hover */
+.gallery-item::before {
+    content: 'Espaço para Imagem';
+    /* "Space for Image" */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.gallery-item:hover::before {
+    opacity: 1;
+}
+
+/* Contact Section (WhatsApp Focus) */
+.contact {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 5rem 5%;
+    text-align: center;
+}
+
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #25D366;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 1.25rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 2rem;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.05);
+    background-color: #20bd5a;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+.footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #020617;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+/* Default: Hide menu toggle on desktop */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.bar {
+    height: 3px;
+    width: 100%;
+    background-color: var(--text-light);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+        /* Show on mobile */
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        right: 0;
+        /* Align to right */
+        background-color: var(--primary-color);
+        width: 70%;
+        /* Drawer width */
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(100%);
+        /* Slide out by default */
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Active state for menu */
+    .nav-links.active {
+        transform: translateX(0);
+    }
+
+    .nav-links a {
+        margin: 2rem 0;
+        font-size: 1.5rem;
+    }
+
+    /* Hamburger Animation when active */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Typographic adjustments for mobile to prevent bad breaks */
+    .hero-content h1 {
+        font-size: 1.5rem;
+        word-wrap: normal;
+        word-break: normal;
+        /* STRICTLY NORMAL */
+        overflow-wrap: normal;
+        hyphens: none;
+        -webkit-hyphens: none;
+        line-height: 1.3;
+        padding: 0 0.5rem;
+        text-wrap: balance;
+        /* New feature to balance lines */
+    }
+
+    .hero-content p {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+        word-wrap: normal;
+        word-break: normal;
+        /* STRICTLY NORMAL */
+        hyphens: none;
+        text-wrap: pretty;
+        /* Prevents orphans */
+    }
+
+    /* Adjust logo text size too if needed */
+    .logo-text {
+        font-size: 1.1rem;
+    }
+
+    .services,
+    .gallery,
+    .contact {
+        padding: 3rem 1rem;
+        /* Reduced padding for mobile */
+    }
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    animation: attention-float 2s infinite;
+}
+
+.floating-whatsapp svg {
+    width: 35px;
+    height: 35px;
+}
+
+.floating-whatsapp:hover {
+    background-color: #20bd5a;
+    animation: happy-float 0.4s ease-in-out infinite;
+    transform: scale(1.1);
+    /* Explicitly expand on hover */
+}
+
+@keyframes attention-float {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+    }
+}
+
+@keyframes happy-float {
+    0% {
+        transform: scale(1.1) rotate(0deg);
+    }
+
+    20% {
+        transform: scale(1.1) rotate(-5deg);
+    }
+
+    40% {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    60% {
+        transform: scale(1.1) rotate(-5deg);
+    }
+
+    80% {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    100% {
+        transform: scale(1.1) rotate(0deg);
+    }
+}
+
+/* Mobile adjustments for floating button to avoid system bars */
+@media (max-width: 768px) {
+    .floating-whatsapp {
+        bottom: 80px;
+        /* Much higher to be safe from UI bars */
+        right: 20px;
+        width: 55px;
+        height: 55px;
+        z-index: 99999;
+        /* Max priority */
+    }
+}
+
+/* Lightbox Modal Styles */
+.lightbox {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 10050;
+    /* Above everything */
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    object-fit: contain;
+    animation: zoomIn 0.3s;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 10051;
+}
+
+.close-lightbox:hover,
+.close-lightbox:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Transparent/Subtle */
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Gallery Hover Effect */
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile adjustments for lightbox */
+@media (max-width: 768px) {
+    .lightbox-content {
+        width: 100%;
+    }
+}
